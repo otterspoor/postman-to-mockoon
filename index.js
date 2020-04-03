@@ -62,5 +62,5 @@ mockoon.addEnvironment(env);
 
 fs.writeFile(outfile[1], JSON.stringify(mockoon, null, 4), function (err) {
     if (err) throw err;
-    console.log('Saved!');
+    console.log(`Mockoon file staved to ${outfile[1]}`);
 });
