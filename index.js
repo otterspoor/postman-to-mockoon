@@ -34,8 +34,9 @@ postman.item.forEach(collection=>{
         let route = new Route();
         route.uuid = r_data.name;
         route.method = r_data.request.method.toLowerCase();
-        route.endpoint = r_data.request.url.path.join("/");
-        if(r_data.response.length>0)
+        let path = r_data.request.url.path;
+        route.endpoint = typeof path == 'string' ? path : path.join("/");
+        if(r_data.response && r_data.response.length>0)
         {
             r_data.response.forEach(r=>{       
                 let resp = new Response();
