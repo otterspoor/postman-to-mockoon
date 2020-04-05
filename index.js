@@ -42,14 +42,23 @@ postman.item.forEach((collection) => {
     if (r_data.request && r_data.responses && r_data.responses.length == 0) {
       // console.warn("Found request-only item, skipping...");
     } else {
-      if(r_data.response){
+      if (r_data.response) {
         r_data.responses = r_data.response;
       }
       let route = new Route();
       route.documentation = r_data.name;
       route.method = r_data.request.method.toLowerCase();
       let url = r_data.request.url;
-      route.endpoint = typeof url == "string" ? url : url.path.join("/");
+
+      route.endpoint = (typeof url == "string" ?
+        url
+        : (
+          typeof url.path == "string" ?
+            url.path
+            : url.path.join("/")
+        )
+      );
+
       if (r_data.responses && r_data.responses.length > 0) {
         r_data.responses.forEach((r) => {
           let resp = new Response();
