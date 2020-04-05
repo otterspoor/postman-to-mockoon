@@ -31,9 +31,8 @@ const {
 let rawdata = fs.readFileSync(filepath);
 let postman = JSON.parse(rawdata);
 
-let mockoon = new Mockoon();
-let env = new Environment();
-env.item.uuid = postman.info._postman_id;
+let mockoon = Mockoon()
+let env = Environment()
 
 transformPostmanToMockoon({ postman, mockoon, env })
 

@@ -6,6 +6,8 @@ const {
 } = require("./lib/models/");
 
 const transformPostmanToMockoon = ({ postman, mockoon, env }) => {
+
+    env.item.uuid = postman.info._postman_id;
     postman.item.forEach((collection) => {
         collection.item.forEach((r_data) => {
             if (r_data.request && r_data.responses && r_data.responses.length == 0) {
@@ -14,7 +16,7 @@ const transformPostmanToMockoon = ({ postman, mockoon, env }) => {
                 if (r_data.response) {
                     r_data.responses = r_data.response;
                 }
-                let route = new Route();
+                let route = Route();
                 route.documentation = r_data.name;
                 route.method = r_data.request.method.toLowerCase();
                 let url = r_data.request.url;
@@ -30,7 +32,7 @@ const transformPostmanToMockoon = ({ postman, mockoon, env }) => {
 
                 if (r_data.responses && r_data.responses.length > 0) {
                     r_data.responses.forEach((r) => {
-                        let resp = new Response();
+                        let resp = Response();
                         if (r.code) {
                             resp.statusCode = r.code.toString();
                         }
@@ -40,17 +42,17 @@ const transformPostmanToMockoon = ({ postman, mockoon, env }) => {
                         if (r.body) {
                             resp.body = r.body;
                         }
-                        route.addResponse(resp);
+                        route.responses.push(resp);
                     });
                 } else {
-                    route.addResponse(new Response());
+                    route.responses.push(Response())
                 }
-                env.item.addRoute(route);
+                env.item.routes.push(route);
             }
         });
     });
 
-    mockoon.addEnvironment(env);
+    mockoon.data.push(env);
 }
 
 module.exports = {
