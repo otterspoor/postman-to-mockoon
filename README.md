@@ -7,3 +7,7 @@ This repository provides a CLI tool for converting Postman collections (only v2 
 `npm i -g otterspoor/postman-to-mockoon`
 
 `postman-to-mockoon input-file output-file`
+
+## Tests
+
+`yarn test`
